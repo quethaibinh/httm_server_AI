@@ -2,7 +2,7 @@ from sqlalchemy import Column, Date, Integer, String, Boolean
 from sqlalchemy.orm import relationship
 from database import Base
 
-class Member(Base):
+class Member():
     __tablename__ = "member"
 
     id = Column(Integer, primary_key=True, index=True)

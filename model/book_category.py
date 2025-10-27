@@ -2,7 +2,7 @@ from sqlalchemy import Column, ForeignKey, Integer
 from sqlalchemy.orm import relationship
 from database import Base
 
-class BookCategory(Base):
+class BookCategory():
     __tablename__ = "book_category"
 
     id = Column(Integer, primary_key=True, index=True)

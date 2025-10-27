@@ -74,6 +74,7 @@ class AutoCrawlService:
                 response = ReviewResponse(
                     book_id=product.id,
                     book_name=product.name,
+                    review_id=it.get("id"),
                     rating=it.get("rating"),
                     raw_content=it.get("content", ""),
                     created_at=created_at,

@@ -2,7 +2,7 @@ from sqlalchemy import Column, Date, String, Integer
 from sqlalchemy.orm import relationship
 from database import Base
 
-class Author(Base):
+class Author():
     __tablename__ = "author"
 
     id = Column(Integer, primary_key=True, index=True)

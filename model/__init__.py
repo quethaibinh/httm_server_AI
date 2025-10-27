@@ -1,4 +1,3 @@
-from .aspect import Aspect
 from .book import Book
 from .review import Review
 from .review_aspect import ReviewAspect
@@ -10,6 +9,6 @@ from .member import Member
 from .admin import Admin
 
 __all__ = [
-    'Aspect', 'Book', 'Review', 'ReviewAspect', 'Category', 'BookCategory',
+    'Book', 'Review', 'ReviewAspect', 'Category', 'BookCategory',
     'Author', 'BookAuthor', 'Member', 'Admin'
 ]

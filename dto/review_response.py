@@ -1,4 +1,5 @@
 # model/dto.py
+from tkinter import Text
 from typing import Any, Optional
 
 from pydantic import BaseModel, Field
@@ -11,6 +12,7 @@ class AspectSentiment(BaseModel):
 
 
 class ReviewResponse(BaseModel):
+    review_id: int
     book_id: int
     book_name: str
     rating: float | None = None

@@ -6,14 +6,13 @@ from database import Base
 
 if TYPE_CHECKING:
     from .book import Book
-    from .review_aspect import ReviewAspect
 
 class Review(Base):
     __tablename__ = "review"
 
     id = Column(Integer, primary_key=True, index=True)
     book_id = Column(Integer, ForeignKey("book.id"), nullable=False)
-    raw_text = Column(String(255))
+    raw_text = Column(Text)
     rating = Column(Float)
     source = Column(String(255))
     created_at = Column(DateTime(timezone=True))

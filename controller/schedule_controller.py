@@ -5,18 +5,22 @@ from datetime import datetime
 import time
 from database import SessionLocal
 from repository.book_repository import BookRepository
+from repository.review_aspect_repository import ReviewAspectRepository
 from repository.review_repository import ReviewRepository
 from service.auto_crawl_service import AutoCrawlService
 from dto.review_response import CollectStatus
 from service.handle_data_service import HandleDataService
+from service.review_service import ReviewService
 
 class ScheduleController:
     def __init__(self, interval_days: int = 1):
         self.db = SessionLocal()
         self.book_repo = BookRepository(self.db)
         self.review_repo = ReviewRepository(self.db)
+        self.review_aspect_repo = ReviewAspectRepository(self.db)
         self.crawler = AutoCrawlService(self.book_repo, self.db)
         self.handle_data_service = HandleDataService()
+        self.review_service = ReviewService(self.review_repo, self.review_aspect_repo)
         self.scheduler = BackgroundScheduler()
         self.status = CollectStatus()
         self.interval_days = interval_days
@@ -35,19 +39,11 @@ class ScheduleController:
             cleaned = self.crawler.filter_and_clean(raw)
             print(f"Sau làm sạch: còn {len(cleaned)} review hợp lệ.")
             all_cleaned.extend(cleaned)
-            # print("Nghỉ 5 giây trước khi chuyển sang sản phẩm tiếp theo...")
-            # time.sleep(random.uniform(5, 10))
             overall_response = self.handle_data_service.handle_review_overall(all_cleaned)
             response = self.handle_data_service.handle_review_aspect(overall_response)
-
-            for review in response:
-                print(review)
-
-        # saved = self.review_repo.save_reviews_to_excel(all_cleaned)
-        # total_collected = saved
-        # self.status.last_run = datetime.now().isoformat()
-        # self.status.total_collected = int(total_collected)
-        # self.status.running = False
+            self.review_service.saveData(response)
+            print("Nghỉ 5 giây trước khi chuyển sang sản phẩm tiếp theo...")
+            time.sleep(random.uniform(5, 10))
         print(f"[ScheduleController] Done collect at {datetime.now()}, saved {total_collected}")
 
     def start(self):

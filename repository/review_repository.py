@@ -1,21 +1,35 @@
 # repository/review_repository.py
 import pandas as pd
 from typing import List
+
+from sqlalchemy.orm import Session
 from dto.review_response import ReviewResponse
+from model.review import Review
 
 class ReviewRepository:
-    def __init__(self, output_path: str = "clean_reviews.xlsx"):
-        self.output_path = output_path
+    def __init__(self, db: Session):
+        self.db = db
 
-    def save_reviews_to_excel(self, reviews: List[ReviewResponse]):
-        if not reviews:
-            return 0
-        df = pd.DataFrame([r.to_dict() for r in reviews])
-        # nếu file tồn tại, gộp (append) và drop duplicate
-        try:
-            old = pd.read_excel(self.output_path)
-            df = pd.concat([old, df], ignore_index=True).drop_duplicates(subset=["review_id"])
-        except Exception:
-            pass
-        df.to_excel(self.output_path, index=False)
-        return len(df)
+    def save(self, reviewResponses: List[ReviewResponse]):
+        incoming_ids = {r.review_id for r in reviewResponses}
+        existing_ids = {
+            rid for (rid,) in self.db.query(Review.id)
+            .filter(Review.id.in_(incoming_ids))
+            .all()
+        }
+
+        reviews = []
+        for reviewResponse in reviewResponses:
+            if reviewResponse.review_id not in existing_ids:
+                reviews.append(Review(
+                    id = reviewResponse.review_id,
+                    book_id = reviewResponse.book_id,
+                    raw_text = reviewResponse.raw_content,
+                    rating = reviewResponse.rating,
+                    source = reviewResponse.customer_name,
+                    created_at = reviewResponse.created_at,
+                    sentiment = reviewResponse.sentiment_overall
+                ))
+        self.db.bulk_save_objects(reviews)
+        self.db.commit()
+        return len(reviews)

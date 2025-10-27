@@ -7,7 +7,6 @@ from database import Base
 if TYPE_CHECKING:
     from .book import Book
     from .review import Review
-    from .aspect import Aspect
 
 class ReviewAspect(Base):
     __tablename__ = "review_aspect"
@@ -15,10 +14,9 @@ class ReviewAspect(Base):
     id = Column(Integer, primary_key=True, index=True)
     sentiment = Column(String(255))
     created_at = Column(DateTime(timezone=True))
-    aspect_id = Column(Integer, ForeignKey("aspect.id"), nullable=False)
+    aspect_code = Column(String, nullable=False)
     review_id = Column(Integer, ForeignKey("review.id"), nullable=False)
     book_id = Column(Integer, ForeignKey("book.id"), nullable=False)
 
     review = relationship("Review", back_populates="aspects")
     book = relationship("Book", back_populates="review_aspects")
-    aspect = relationship("Aspect", back_populates="review_aspects")

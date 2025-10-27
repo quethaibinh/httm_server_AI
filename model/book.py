@@ -25,5 +25,5 @@ class Book(Base):
 
     reviews = relationship("Review", back_populates="book", cascade="all, delete-orphan")
     review_aspects = relationship("ReviewAspect", back_populates="book", cascade="all, delete-orphan")
-    book_categories = relationship("BookCategory", back_populates="book", cascade="all, delete-orphan")
-    book_authors = relationship("BookAuthor", back_populates="book", cascade="all, delete-orphan")
+    # book_categories = relationship("BookCategory", back_populates="book", cascade="all, delete-orphan")
+    # book_authors = relationship("BookAuthor", back_populates="book", cascade="all, delete-orphan")
