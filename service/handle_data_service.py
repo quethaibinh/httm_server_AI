@@ -6,32 +6,6 @@ from typing import Dict, List, Protocol, Union
 from dto.review_response import AspectSentiment, ReviewResponse
 from transformers import AutoModelForSequenceClassification, AutoTokenizer, pipeline
 
-# # 1. Xác định đường dẫn đến thư mục checkpoint của bạn
-# BASE_DIR = Path(__file__).resolve().parent  # thư mục chứa file hiện tại
-# CHECKPOINT_PATH = (BASE_DIR / ".." / "model_AI" / "model_overall").resolve()
-
-# # 2. Tải mô hình từ đường dẫn cục bộ
-# model = AutoModelForSequenceClassification.from_pretrained(CHECKPOINT_PATH)
-
-# # 3. Tải tokenizer từ đường dẫn cục bộ
-# tokenizer = AutoTokenizer.from_pretrained(CHECKPOINT_PATH)
-
-# print("Đã tải mô hình và tokenizer từ checkpoint cục bộ thành công!")
-
-# # 4. Sử dụng mô hình (ví dụ với pipeline)
-# # Bạn có thể đưa thẳng model và tokenizer vừa tải vào pipeline
-# sentiment_pipeline = pipeline(
-#     "sentiment-analysis",  # Nhiệm vụ là phân tích cảm xúc
-#     model=model,
-#     tokenizer=tokenizer
-# )
-
-# # Thử nghiệm
-# text_positive = "Tôi rất thích sản phẩm này, nó thật tuyệt vời."
-# text_negative = "Chất lượng quá tệ, tôi sẽ không bao giờ mua lại."
-
-# print(f"'{text_positive}' -> {sentiment_pipeline(text_positive)}")
-# print(f"'{text_negative}' -> {sentiment_pipeline(text_negative)}")
 
 ASPECT_KEYWORDS = {
     "noi_dung": [

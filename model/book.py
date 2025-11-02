@@ -11,13 +11,13 @@ if TYPE_CHECKING:
     from .book_author import BookAuthor
 
 class Book(Base):
-    __tablename__ = "book"
+    __tablename__ = "books"
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(255), nullable=False)
     brand = Column(String(255))
     description = Column(String(255))
-    created_at = Column(DateTime(timezone=True))
+    created_at = Column(DateTime)
     is_active = Column(Boolean, default=True)
     thumbnail = Column(String(255))
     number_of_page = Column(Integer)

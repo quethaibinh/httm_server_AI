@@ -28,7 +28,6 @@ class ScheduleController:
     def collect_all_once(self):
         print(f"[ScheduleController] Start collect at {datetime.now()}")
         self.status.running = True
-        total_collected = 0
         products = self.crawler.get_all_booḳ̣()
         print(f"\n[ScheduleController] Found {len(products)} products to collect.")
         for p in products:
@@ -44,7 +43,7 @@ class ScheduleController:
             self.review_service.saveData(response)
             print("Nghỉ 5 giây trước khi chuyển sang sản phẩm tiếp theo...")
             time.sleep(random.uniform(5, 10))
-        print(f"[ScheduleController] Done collect at {datetime.now()}, saved {total_collected}")
+        print(f"[ScheduleController] Done collect at {datetime.now()}")
 
     def start(self):
         # chạy 1 lần khi start app (có thể comment nếu không muốn)

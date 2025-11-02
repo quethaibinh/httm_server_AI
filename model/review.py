@@ -11,11 +11,11 @@ class Review(Base):
     __tablename__ = "review"
 
     id = Column(Integer, primary_key=True, index=True)
-    book_id = Column(Integer, ForeignKey("book.id"), nullable=False)
+    book_id = Column(Integer, ForeignKey("books.id"), nullable=False)
     raw_text = Column(Text)
     rating = Column(Float)
     source = Column(String(255))
-    created_at = Column(DateTime(timezone=True))
+    created_at = Column(DateTime)
     status = Column(String(255))
     sentiment = Column(String(255))
 

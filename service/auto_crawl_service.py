@@ -11,7 +11,7 @@ from dto.review_response import ReviewResponse
 from repository.book_repository import BookRepository
 
 class AutoCrawlService:
-    def __init__(self, book_repo: BookRepository, db: Session, max_pages: int = 5, delay_range=(1.5, 3.0)):
+    def __init__(self, book_repo: BookRepository, db: Session, max_pages: int = 10, delay_range=(1.5, 3.0)):
         self.max_pages = max_pages
         self.delay_range = delay_range
         self.user_agents = [

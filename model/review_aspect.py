@@ -13,10 +13,10 @@ class ReviewAspect(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     sentiment = Column(String(255))
-    created_at = Column(DateTime(timezone=True))
-    aspect_code = Column(String, nullable=False)
+    created_at = Column(DateTime)
+    aspect_code = Column(String(255), nullable=False)
     review_id = Column(Integer, ForeignKey("review.id"), nullable=False)
-    book_id = Column(Integer, ForeignKey("book.id"), nullable=False)
+    book_id = Column(Integer, ForeignKey("books.id"), nullable=False)
 
     review = relationship("Review", back_populates="aspects")
     book = relationship("Book", back_populates="review_aspects")
